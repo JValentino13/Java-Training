@@ -23,18 +23,20 @@ public class Main {
             new Kartu("e_money", "", "", 108, 108)
         );
 
-        List<Transaksi> listTransaksi = Arrays.asList(
-            // Saldo atm
-            new Transaksi(101, "Saldo Awal", 1200000.00, 1200000.00),
-            new Transaksi(102, "Saldo Awal", 50000000.00, 50000000.00),
-            new Transaksi(103, "Saldo Awal", 250000.00, 250000.00),
-            new Transaksi(104, "Saldo Awal", 75000.00, 75000.00),
-            new Transaksi(105, "Saldo Awal", 150000.00, 150000.00),
-            
-            // Saldo E-money
-            new Transaksi(106, "Saldo Awal", 50000.00, 50000.00),
-            new Transaksi(107, "Saldo Awal", 180000.00, 180000.00),
-            new Transaksi(108, "Saldo Awal", 100000.00, 100000.00)
+        List<Transaksi> listTransaksi = new LinkedList<>(
+            Arrays.asList(
+                // Saldo atm
+                new Transaksi(101, "Saldo Awal", 1200000.00, 1200000.00),
+                new Transaksi(102, "Saldo Awal", 50000000.00, 50000000.00),
+                new Transaksi(103, "Saldo Awal", 250000.00, 250000.00),
+                new Transaksi(104, "Saldo Awal", 75000.00, 75000.00),
+                new Transaksi(105, "Saldo Awal", 150000.00, 150000.00),
+                
+                // Saldo E-money
+                new Transaksi(106, "Saldo Awal", 50000.00, 50000.00),
+                new Transaksi(107, "Saldo Awal", 180000.00, 180000.00),
+                new Transaksi(108, "Saldo Awal", 100000.00, 100000.00)
+            )
         );
 
         Kartu dataKartu = new Kartu(null, null, null, 0, 0);
@@ -64,16 +66,22 @@ public class Main {
                 System.out.println("Nomor kartu tidak ditemukan, silakan coba lagi");
             }
         } while (dataKartu.nomor_kartu == 0);
+
+        List<Transaksi> transaksiKartu = new LinkedList<>();
+        for (Transaksi transaksi : listTransaksi) {
+            if (transaksi.nomor_kartu == dataKartu.nomor_kartu) {
+                transaksiKartu.add(transaksi);
+            }
+        }
         
         if (dataKartu.jenis_kartu == "atm") {
-            atm(dataKartu);
+            atm(dataKartu, transaksiKartu);
         } else {
-            e_money(dataKartu);
+            e_money(dataKartu, transaksiKartu);
         }
     }
 
-    public static void atm(Kartu dataKartu) {
-        LinkedList<Transaksi> listTransaksi = new LinkedList<Transaksi>();
+    public static void atm(Kartu dataKartu, List<Transaksi> transaksiKartu) {
 
         // Pilihan menu untuk kartu ATM
         Scanner menuInput = new Scanner(System.in);
@@ -128,10 +136,10 @@ public class Main {
                     System.out.println("------------------------------");
 
                     System.out.println("Nomor Kartu     | Nama Transaksi    | Nominal   | Saldo Akhir");
-                    if (listTransaksi.size() <= 0) {
+                    if (transaksiKartu.size() <= 0) {
                         System.out.println("Belum ada data Transaksi, harap melakukan transaksi terlebih dahulu");
                     } else {
-                        for (var history : listTransaksi) {
+                        for (var history : transaksiKartu) {
                             System.out.println(
                                 history.nomor_kartu + "         | " + 
                                 history.nama_transaksi + "  | " + 
@@ -175,7 +183,7 @@ public class Main {
                         }
                     } while (pin != dataKartu.pin_kartu);
 
-                    listTransaksi.add( new Transaksi(dataKartu.nomor_kartu, "Pembayaran Pembelanjaan", nominal, nominal));
+                    transaksiKartu.add( new Transaksi(dataKartu.nomor_kartu, "Pembayaran Pembelanjaan", nominal, nominal));
 
                     System.out.println("\n");
                     System.out.println("==============================");
@@ -194,8 +202,7 @@ public class Main {
         } while (menu < 0 || menu > 7);
     }
 
-    public static void e_money(Kartu dataKartu) {
-        LinkedList<Transaksi> listTransaksi = new LinkedList<Transaksi>();
+    public static void e_money(Kartu dataKartu, List<Transaksi> transaksiKartu) {
 
         // Pilihan Menu untuk E-Money
         Scanner menuInput = new Scanner(System.in);
@@ -211,15 +218,15 @@ public class Main {
             if (menu < 0 || menu > 3) {
                 System.out.println("Masukan angka sesuai pilihan yang ada");
             }
+            Double saldo;
+                if (transaksiKartu.size() <= 0) {
+                    saldo = 0.0;
+                } else {
+                    saldo = transaksiKartu.get(transaksiKartu.size() - 1).saldo_akhir;
+                }
 
             switch (menu){
                 case 1:
-                    Double saldo;
-                    if (listTransaksi.size() <= 0) {
-                        saldo = 0.0;
-                    } else {
-                        saldo = listTransaksi.getLast().saldo_akhir;
-                    }
                     System.out.println("\n");
                     System.out.println("==============================");
                     System.out.println("Informasi Rekening dan Saldo Anda");
@@ -241,10 +248,10 @@ public class Main {
                     System.out.println("------------------------------");
 
                     System.out.println("Nomor Kartu     | Nama Transaksi    | Nominal   | Saldo Akhir");
-                    if (listTransaksi.size() <= 0) {
+                    if (transaksiKartu.size() <= 0) {
                         System.out.println("Belum ada data Transaksi, harap melakukan transaksi terlebih dahulu");
                     } else {
-                        for (var history : listTransaksi) {
+                        for (var history : transaksiKartu) {
                             System.out.println(
                                 history.nomor_kartu + "         | " + 
                                 history.nama_transaksi + "  | " + 
@@ -268,6 +275,7 @@ public class Main {
 
                     Scanner nominalInput = new Scanner(System.in);
                     Double nominal = 0.0;
+                    Double saldo_akhir = saldo;
                     do {
                         System.out.print("Masukkan nominal Pembayaran : ");
                         nominal = nominalInput.nextDouble();
@@ -275,9 +283,16 @@ public class Main {
                         if (nominal <= 0) {
                             System.out.println("Nominal pembayaran minimal 1 rupiah");
                         }
+
+                        if (nominal > saldo) {
+                            System.out.println("Saldo anda tidak mencukupi");
+                            nominal = 0.0;
+                        } else {
+                            saldo_akhir = saldo - nominal;
+                        }
                     } while (nominal <= 0);
 
-                    listTransaksi.add( new Transaksi(dataKartu.nomor_kartu, "Pembayaran Pembelanjaan", nominal, nominal));
+                    transaksiKartu.add( new Transaksi(dataKartu.nomor_kartu, "Pembayaran Pembelanjaan", nominal, saldo_akhir));
 
                     System.out.println("\n");
                     System.out.println("==============================");
