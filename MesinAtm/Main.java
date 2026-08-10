@@ -1,54 +1,11 @@
-package task_2;
+package MesinAtm;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-class Kartu {
-    String jenis_kartu;
-    String nama_pemilik;
-    String cabang_bank;
-    int nomor_kartu;
-    int pin_kartu;
-
-    public Kartu(
-        String jenis_kartu, 
-        String nama_pemilik, 
-        String cabang_bank, 
-        int nomor_kartu, 
-        int pin_kartu) 
-    {
-        this.jenis_kartu = jenis_kartu;
-        this.nama_pemilik = nama_pemilik;
-        this.cabang_bank = cabang_bank;
-        this.nomor_kartu = nomor_kartu;
-        this.pin_kartu = pin_kartu;
-    }
-
-}
-
-class Transaksi {
-    int nomor_kartu;
-    String nama_transaksi;
-    Double nominal;
-    Double saldo_akhir;
-
-    public Transaksi(
-        int nomor_kartu,
-        String nama_transaksi,
-        Double nominal,
-        Double saldo_akhir) 
-    {
-        this.nomor_kartu = nomor_kartu;
-        this.nama_transaksi = nama_transaksi;
-        this.nominal = nominal;
-        this.saldo_akhir = saldo_akhir;
-    }
-}
-
-public class soal_b {
+public class Main {
 
     public static void main(String[] args) {
 
@@ -69,15 +26,15 @@ public class soal_b {
         List<Transaksi> listTransaksi = Arrays.asList(
             // Saldo atm
             new Transaksi(101, "Saldo Awal", 1200000.00, 1200000.00),
-            new Transaksi(0, "Saldo Awal", 50000000.00, 50000000.00),
-            new Transaksi(0, "Saldo Awal", 250000.00, 250000.00),
-            new Transaksi(0, "Saldo Awal", 75000.00, 75000.00),
-            new Transaksi(0, "Saldo Awal", 150000.00, 150000.00),
+            new Transaksi(102, "Saldo Awal", 50000000.00, 50000000.00),
+            new Transaksi(103, "Saldo Awal", 250000.00, 250000.00),
+            new Transaksi(104, "Saldo Awal", 75000.00, 75000.00),
+            new Transaksi(105, "Saldo Awal", 150000.00, 150000.00),
             
             // Saldo E-money
-            new Transaksi(0, "Saldo Awal", 50000.00, 50000.00),
-            new Transaksi(0, "Saldo Awal", 180000.00, 180000.00),
-            new Transaksi(0, "Saldo Awal", 100000.00, 100000.00)
+            new Transaksi(106, "Saldo Awal", 50000.00, 50000.00),
+            new Transaksi(107, "Saldo Awal", 180000.00, 180000.00),
+            new Transaksi(108, "Saldo Awal", 100000.00, 100000.00)
         );
 
         Kartu dataKartu = new Kartu(null, null, null, 0, 0);
