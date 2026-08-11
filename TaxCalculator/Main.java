@@ -1,4 +1,4 @@
-package task_2;
+package TaxCalculator;
 
 import java.util.Scanner;
 
@@ -76,7 +76,7 @@ class TaxCalculatorPph21 implements TaxCalculator
     }
 }
 
-public class soal_a
+public class Main
 {
     public static void main(String[] args) throws Exception {
         

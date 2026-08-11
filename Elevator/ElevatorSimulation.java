@@ -1,4 +1,4 @@
-package task_1;
+package Elevator;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -39,7 +39,7 @@ public class ElevatorSimulation {
             } while (lantaiPenjemputan <= 0 || lantaiPenjemputan > 10);
         }
 
-
+        penjemputanInput.close();
         // 3. Lantai tujuan yang diinput tamu harus berada di rentang angka 1-10. 
         //    Tamu wajib input ulang lantai jika rentang angka yg diinput tidak valid
         Scanner tujuanInput = new Scanner(System.in);
@@ -54,6 +54,8 @@ public class ElevatorSimulation {
                 lantaiTujuan =  tujuanInput.nextInt();
             } while (lantaiTujuan <= 0 || lantaiTujuan > 10);
         }
+
+        tujuanInput.close();
         // 6. Tamu boleh memasukkan lantai penjemputan dan lantai tujuan dengan angka yang sama. 
         //    Program akan mengeluarkan notifikasi bahwa dia tidak perlu naik lift. 
         //    Dan lift tidak perlu naik / turun untuk menjemput
